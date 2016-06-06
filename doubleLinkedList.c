@@ -51,8 +51,9 @@ Node* deleteTail(Node *head)
 
 int isPalindrome(Node *head)
 {
-	Node *actual;
+	Node *actual, *start;
 
+	start = head;
 	if(head == 0)
 	{return 1;}
 
@@ -62,8 +63,8 @@ int isPalindrome(Node *head)
 		{return 0;}
 		actual = actual->prev;
 		head = head->next;
-	}while(head != actual);
+	}while( (head != actual) && (head->next != actual) );
 
-	if(head == actual) { return 1; }
+	if(head->data == actual->data) { return 1; }
 	else {return 0;}
 }
