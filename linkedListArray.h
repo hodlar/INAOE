@@ -8,3 +8,4 @@ struct Node {
 void print(Node* head);
 Node* insertTail(Node *head, int data);
 Node* deleteTail(Node *head);
+int isPalindrome(Node *head);
