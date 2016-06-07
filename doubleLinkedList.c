@@ -12,6 +12,16 @@ void print(Node *head)
     }while(head != actual);
 }
 
+void printbool(Node *head){
+	Node *actual = head;
+    do
+    {
+        printf("%i",head->data);
+        head = head->next;
+    }while(head != actual);
+
+}
+
 Node* insertTail(Node *head,int data)
 {
     Node *tmp;
