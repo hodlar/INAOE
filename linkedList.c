@@ -11,6 +11,15 @@ void print(Node *head)
     }
 }
 
+void printval(Node *head)
+{
+    while(head != NULL)
+    {
+        printf("%i",head->data);
+        head = head->next;
+    }
+}
+
 Node* insertTail(Node *head,int data)
 {
     Node *tmp, *headTmp;
@@ -32,7 +41,7 @@ Node* insertTail(Node *head,int data)
 
 Node* insertHead(Node *head,int data)
 {
-  Node *tmp, *headTmp;
+	Node *tmp, *headTmp;
     tmp = (Node*)malloc(sizeof(Node));
     tmp->data = data;
     headTmp = head;
@@ -88,7 +97,7 @@ Node* deleteNode(Node *head, int position)
         free(tmp);
         return head;
     }
-    
+
     position = position - 1;
     tmp = head;
     for(i = 1; i <= position; i++)
@@ -97,4 +106,22 @@ Node* deleteNode(Node *head, int position)
     tmp->next = tmp->next->next;
     free(deleted);
     return head;
+}
+
+Node* revertList(Node *head)
+{
+	Node *prev, *next;
+	prev = 0;
+
+	if(head == 0)
+		return head;
+	while(head->next != 0){
+		next = head->next;
+		head->next = prev;
+		prev = head;
+		head = next;
+		next = head->next;
+	}
+	head->next = prev;
+	return head;
 }
