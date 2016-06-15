@@ -1,3 +1,6 @@
+#ifndef STACK_H
+#define STACK_H
+
 #include "node.h"
 
 typedef struct Stack Stack;
@@ -7,6 +10,8 @@ struct Stack{
 	Node *top;
 };
 
-void print(Node* head);
+void printStack(Stack* stack);
 Stack* enStack(Stack *stack, int data);
-Stack* deStack(Stack *stack);
+int deStack(Stack **stackptr);
+
+#endif /*STACK_H*/

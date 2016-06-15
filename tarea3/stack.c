@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include "stack.h"
 
-void print(Node *head)
+void printStack(Stack *stack)
 {
-    while(head != NULL)
+	Node *head;
+	head = stack->top;
+    while(head)
     {
         printf("%i\n",head->data);
         head = head->next;
@@ -31,14 +33,21 @@ Stack* enStack(Stack *stack,int data)
     return stack;
 }
 
-Stack* deStack(Stack *stack)
+int deStack(Stack **stackptr)
 {
+	Stack *stack;
+	int deletedValue;
     Node *tmp = 0;
-    if(!stack)
-        return 0;
+
+	stack = *stackptr;
+    if(!stack || !stack->top)
+        deletedValue = 0;
 	else{
 		tmp = stack->top->next;
+		deletedValue = stack->top->data;
 		free(stack->top);
 		stack->top = tmp;
 	}
+	*stackptr = stack;
+	return deletedValue;
 }
