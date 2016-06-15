@@ -1,9 +1,9 @@
-#include "node.h"
-
 #ifndef QUEUE_H
 #define QUEUE_H
+
+#include "node.h"
+
 typedef struct Queue Queue;
-#endif
 
 struct Queue {
 	Node *begin;
@@ -14,3 +14,5 @@ struct Queue {
 void printQueue(Queue *queue);
 Queue* enQueue(Queue *queue, int data);
 int deQueue(Queue **queueptr);
+
+#endif /*QUEUE_H*/
