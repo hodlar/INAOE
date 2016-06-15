@@ -16,9 +16,7 @@ void printStack(Stack *stack)
 Stack* enStack(Stack *stack,int data)
 {
 	Node *tmp;
-    tmp = (Node*)malloc(sizeof(Node));
-    tmp->data = data;
-	tmp->next = 0;
+	tmp = new_node(data);
 
     if(!stack)
     {

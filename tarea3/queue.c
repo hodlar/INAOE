@@ -15,9 +15,7 @@ void printQueue(Queue *queue)
 Queue* enQueue(Queue *queue, int data)
 {
 	Node *tmp;
-    tmp = (Node*)malloc(sizeof(Node));
-	tmp->next = 0;
-    tmp->data = data;
+	tmp = new_node(data);
 
     if(!queue)
     {
