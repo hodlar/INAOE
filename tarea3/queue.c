@@ -1,46 +1,68 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "linkedList.h"
+#include "queue.h"
 
-void print(Node *head)
+void printQueue(Queue *queue)
 {
-    while(head != NULL)
+	Node *head = queue->begin;
+    while(head)
     {
         printf("%i\n",head->data);
         head = head->next;
     }
 }
 
-void printval(Node *head)
+Queue* enQueue(Queue *queue, int data)
 {
-    while(head != NULL)
+	Node *tmp;
+    tmp = (Node*)malloc(sizeof(Node));
+	tmp->next = 0;
+    tmp->data = data;
+
+    if(!queue)
     {
-        printf("%i",head->data);
-        head = head->next;
+		queue = malloc(sizeof(queue));
+		queue->count = 1;
+        queue->begin = tmp;
+		queue->end = tmp;
     }
+    else
+    {
+		tmp->next = queue->begin;
+		queue->begin = tmp;
+        queue->count++;
+    }
+    return queue;
 }
 
-Node* enqueue(Queue *queue,int data)
+int deQueue(Queue **queueptr)
 {
-    Node *tmp;
-    tmp = (Node*)malloc(sizeof(Node));
-    tmp->data = data;
-    tmp->next = 0;
-    queue->end->next = tmp;
-    queue->end = tmp;
- }
+    Node *deleted;
+	Queue *queue;
+	int j, position, deletedValue;
 
-Queue* dequeue(Queue *queue)
-{
-    Node *tmp;
-    tmp = queue->begin;
-    if(!tmp)
-        return 0;
-    if(queue->begin == queue->end)
-        return 0;
+	queue = *queueptr;
+    if(!queue || !queue->begin){
+		return 0;
+	}
+	else if(queue->count > 1){
+		position = queue->count;
+		deleted = queue->begin;
 
-    while(tmp->next != queue->end){
-        tmp = tmp->next;
-    }
-    queue->end = tmp;
+		for(j = 2; j < queue->count; j++){
+			deleted = deleted->next;
+		}
+		queue->end = deleted;
+		queue->count--;
+		deletedValue = deleted->next->data;
+		free(deleted->next);
+	}
+	else{
+		deletedValue = queue->end->data;
+		free(queue->end);
+		free(queue);
+		queue = 0;
+	}
+	*queueptr = queue;
+    return deletedValue;
 }
