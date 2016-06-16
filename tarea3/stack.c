@@ -2,7 +2,14 @@
 #include <stdlib.h>
 #include "stack.h"
 
-void printStack(Stack *stack)
+Stack* stack_new(){
+	Stack *tmp;
+	tmp = malloc(sizeof(tmp));
+	tmp->top = 0;
+	return tmp;
+}
+
+void stack_print(Stack *stack)
 {
 	Node *head;
 	head = stack->top;
@@ -13,39 +20,39 @@ void printStack(Stack *stack)
     }
 }
 
-Stack* enStack(Stack *stack,int data)
+Stack* stack_push(Stack *stack,int data)
 {
 	Node *tmp;
 	tmp = new_node(data);
-
-    if(!stack)
-    {
-		stack = malloc(sizeof(stack));
-        stack->top = tmp;
-    }
-    else
-    {
-		tmp->next = stack->top;
-		stack->top = tmp;
-    }
+	tmp->next = stack->top;
+	stack->top = tmp;
     return stack;
 }
 
-int deStack(Stack **stackptr)
+int stack_pop(Stack *stack)
 {
-	Stack *stack;
 	int deletedValue;
     Node *tmp = 0;
 
-	stack = *stackptr;
-    if(!stack || !stack->top)
-        deletedValue = 0;
+    if(!stack->top)
+	{
+        deletedValue = -1;
+	}
 	else{
 		tmp = stack->top->next;
 		deletedValue = stack->top->data;
 		free(stack->top);
 		stack->top = tmp;
 	}
-	*stackptr = stack;
 	return deletedValue;
+}
+
+int stack_delete(Stack *stack)
+{
+	if(!stack)
+		return 0;
+	else{
+		free(stack);
+		return 1;
+	}
 }

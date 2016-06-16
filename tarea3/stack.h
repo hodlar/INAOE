@@ -10,8 +10,10 @@ struct Stack{
 	Node *top;
 };
 
-void printStack(Stack* stack);
-Stack* enStack(Stack *stack, int data);
-int deStack(Stack **stackptr);
+Stack* stack_new();
+void stack_print(Stack* stack);
+Stack* stack_push(Stack *stack, int data);
+int stack_pop(Stack *stack);
+int stack_delete(Stack *stack);
 
 #endif /*STACK_H*/
