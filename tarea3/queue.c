@@ -2,7 +2,13 @@
 #include <stdlib.h>
 #include "queue.h"
 
-void printQueue(Queue *queue)
+Queue* queue_new(){
+	Queue *tmp;
+	tmp = malloc(sizeof(Queue));
+	tmp->begin = 0;
+}
+
+void queue_print(Queue *queue)
 {
 	Node *head = queue->begin;
     while(head)
@@ -12,55 +18,48 @@ void printQueue(Queue *queue)
     }
 }
 
-Queue* enQueue(Queue *queue, int data)
+Queue* queue_push(Queue *queue, int data)
 {
 	Node *tmp;
 	tmp = new_node(data);
 
-    if(!queue)
-    {
-		queue = malloc(sizeof(queue));
-		queue->count = 1;
-        queue->begin = tmp;
-		queue->end = tmp;
-    }
-    else
-    {
-		tmp->next = queue->begin;
-		queue->begin = tmp;
-        queue->count++;
-    }
+	tmp->next = queue->begin;
+	queue->begin = tmp;
     return queue;
 }
 
-int deQueue(Queue **queueptr)
+int queue_pop(Queue *queue)
 {
-    Node *deleted;
-	Queue *queue;
+    Node *tmp;
 	int j, position, deletedValue;
 
-	queue = *queueptr;
-    if(!queue || !queue->begin){
+    if(!queue->begin){
 		return 0;
 	}
-	else if(queue->count > 1){
-		position = queue->count;
-		deleted = queue->begin;
-
-		for(j = 2; j < queue->count; j++){
-			deleted = deleted->next;
+	else if(queue->begin->next != 0){
+		tmp = queue->begin;
+		while(tmp->next->next != 0){
+			tmp = tmp->next;
 		}
-		queue->end = deleted;
-		queue->count--;
-		deletedValue = deleted->next->data;
-		free(deleted->next);
+		deletedValue = tmp->next->data;
+		free(tmp->next);
+		tmp->next = 0;
 	}
 	else{
-		deletedValue = queue->end->data;
-		free(queue->end);
-		free(queue);
-		queue = 0;
+		deletedValue = queue->begin->data;
+		free(queue->begin);
+		queue->begin = 0;
 	}
-	*queueptr = queue;
     return deletedValue;
+}
+
+int queue_delete(Queue *queue){
+	if(queue){
+		free(queue);
+		return 1;
+	}
+	else{
+		printf("This shouldn't have happened, queue was null");
+		return 0;
+	}
 }

@@ -7,12 +7,12 @@ typedef struct Queue Queue;
 
 struct Queue {
 	Node *begin;
-	Node *end;
-	int count;
 };
 
-void printQueue(Queue *queue);
-Queue* enQueue(Queue *queue, int data);
-int deQueue(Queue **queueptr);
+Queue* queue_new();
+void queue_print(Queue *queue);
+Queue* queue_push(Queue *queue, int data);
+int queue_pop(Queue *queue);
+int queue_delete(Queue *queue);
 
 #endif /*QUEUE_H*/
